@@ -24,4 +24,10 @@ public interface MedicalClinicClient {
 
     @PatchMapping("/appointments/book")
     AppointmentDto bookAppointment(@RequestBody BookAppointmentCommand command);
+
+    @GetMapping("/appointments/free-slots")
+    PageDto<AppointmentDto> getFreeSlots(
+            @RequestParam Long doctorId,
+            Pageable pageable
+    );
 }

@@ -20,4 +20,8 @@ public class VisitGatewayService {
     public AppointmentDto bookAppointment(BookAppointmentCommand command) {
         return medicalClinicClient.bookAppointment(command);
     }
+
+    public PageDto<AppointmentDto> getFreeSlots(Long doctorId, Pageable pageable) {
+        return medicalClinicClient.getFreeSlots(doctorId, pageable);
+    }
 }
