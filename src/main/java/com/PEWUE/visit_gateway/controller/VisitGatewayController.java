@@ -6,6 +6,7 @@ import com.PEWUE.visit_gateway.dto.PageDto;
 import com.PEWUE.visit_gateway.service.VisitGatewayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,8 +33,16 @@ public class VisitGatewayController {
         return visitGatewayService.bookAppointment(command);
     }
 
-    @GetMapping("/free-slots")
+    @GetMapping("/free-slots/doctor")
     public PageDto<AppointmentDto> getFreeSlots(@RequestParam Long doctorId, Pageable pageable) {
         return visitGatewayService.getFreeSlots(doctorId, pageable);
+    }
+
+    @GetMapping("/free-slots/specialization")
+    public PageDto<AppointmentDto> getFreeSlotsBySpecializationAndDate(
+            @RequestParam String specialization,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            Pageable pageable) {
+        return visitGatewayService.getFreeSlotsBySpecializationAndDate(specialization, date, pageable);
     }
 }

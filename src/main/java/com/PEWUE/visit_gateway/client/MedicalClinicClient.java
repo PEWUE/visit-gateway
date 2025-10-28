@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+
 
 @FeignClient(name = "medical-clinic", url = "http://localhost:8080", configuration = MedicalClinicClientConfiguration.class, fallbackFactory = MedicalClinicFallbackFactory.class)
 public interface MedicalClinicClient {
@@ -25,9 +27,9 @@ public interface MedicalClinicClient {
     @PatchMapping("/appointments/book")
     AppointmentDto bookAppointment(@RequestBody BookAppointmentCommand command);
 
-    @GetMapping("/appointments/free-slots")
-    PageDto<AppointmentDto> getFreeSlots(
-            @RequestParam Long doctorId,
-            Pageable pageable
-    );
+    @GetMapping("/appointments/free-slots/doctor")
+    PageDto<AppointmentDto> getFreeSlots(@RequestParam Long doctorId, Pageable pageable);
+
+    @GetMapping("/appointments/free-slots/specialization")
+    PageDto<AppointmentDto> getFreeSlotsBySpecializationAndDate(@RequestParam String specialization, @RequestParam String date, Pageable pageable);
 }

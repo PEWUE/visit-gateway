@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Service
 @RequiredArgsConstructor
 public class VisitGatewayService {
@@ -23,5 +26,9 @@ public class VisitGatewayService {
 
     public PageDto<AppointmentDto> getFreeSlots(Long doctorId, Pageable pageable) {
         return medicalClinicClient.getFreeSlots(doctorId, pageable);
+    }
+
+    public PageDto<AppointmentDto> getFreeSlotsBySpecializationAndDate(String specialization, LocalDate date, Pageable pageable) {
+        return medicalClinicClient.getFreeSlotsBySpecializationAndDate(specialization, date.format(DateTimeFormatter.ISO_DATE), pageable);
     }
 }
