@@ -19,7 +19,6 @@ import java.io.InputStream;
 
 public class MedicalClinicErrorDecoder implements ErrorDecoder {
     private final ErrorDecoder defaultErrorDecoder = new ErrorDecoder.Default();
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public Exception decode(String s, Response response) {
