@@ -25,6 +25,9 @@ public interface MedicalClinicClient {
             Pageable pageable
     );
 
+    @GetMapping("/appointments/{appointmentId}")
+    AppointmentDto findById(@PathVariable Long appointmentId);
+
     @PatchMapping("/appointments/book")
     AppointmentDto bookAppointment(@RequestBody BookAppointmentCommand command);
 

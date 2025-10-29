@@ -59,5 +59,4 @@ public class AppointmentController {
     public void cancelAppointment(@PathVariable Long appointmentId) {
         appointmentService.cancelAppointment(appointmentId);
     }
-
 }

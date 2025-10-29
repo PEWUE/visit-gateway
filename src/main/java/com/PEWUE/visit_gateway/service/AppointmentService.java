@@ -4,11 +4,13 @@ import com.PEWUE.visit_gateway.client.MedicalClinicClient;
 import com.PEWUE.visit_gateway.command.BookAppointmentCommand;
 import com.PEWUE.visit_gateway.dto.AppointmentDto;
 import com.PEWUE.visit_gateway.dto.PageDto;
+import com.PEWUE.visit_gateway.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -37,6 +39,10 @@ public class AppointmentService {
     }
 
     public void cancelAppointment(Long appointmentId) {
+        AppointmentDto appointmentDto = medicalClinicClient.findById(appointmentId);
+        if (appointmentDto.startTime().isBefore(LocalDateTime.now())) {
+            throw new BadRequestException("Cannot cancel past appointments");
+        }
         medicalClinicClient.cancelAppointment(appointmentId);
     }
 }
