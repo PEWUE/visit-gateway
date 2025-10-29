@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
-public class VisitGatewayService {
+public class AppointmentService {
     private final MedicalClinicClient medicalClinicClient;
 
     public PageDto<AppointmentDto> getPatientAppointments(Long patientId, Pageable pageable) {

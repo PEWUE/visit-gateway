@@ -3,7 +3,7 @@ package com.PEWUE.visit_gateway.controller;
 import com.PEWUE.visit_gateway.command.BookAppointmentCommand;
 import com.PEWUE.visit_gateway.dto.AppointmentDto;
 import com.PEWUE.visit_gateway.dto.PageDto;
-import com.PEWUE.visit_gateway.service.VisitGatewayService;
+import com.PEWUE.visit_gateway.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,23 +19,23 @@ import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/visits")
-public class VisitGatewayController {
-    private final VisitGatewayService visitGatewayService;
+@RequestMapping("/appointments")
+public class AppointmentController {
+    private final AppointmentService appointmentService;
 
     @GetMapping("/patient/{patientId}")
     public PageDto<AppointmentDto> getPatientAppointments(@PathVariable Long patientId, Pageable pageable) {
-        return visitGatewayService.getPatientAppointments(patientId, pageable);
+        return appointmentService.getPatientAppointments(patientId, pageable);
     }
 
     @PatchMapping("/book")
     public AppointmentDto bookAppointment(@RequestBody BookAppointmentCommand command) {
-        return visitGatewayService.bookAppointment(command);
+        return appointmentService.bookAppointment(command);
     }
 
     @GetMapping("/free-slots/doctor")
     public PageDto<AppointmentDto> getFreeSlots(@RequestParam Long doctorId, Pageable pageable) {
-        return visitGatewayService.getFreeSlots(doctorId, pageable);
+        return appointmentService.getFreeSlots(doctorId, pageable);
     }
 
     @GetMapping("/free-slots/specialization")
@@ -43,6 +43,6 @@ public class VisitGatewayController {
             @RequestParam String specialization,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             Pageable pageable) {
-        return visitGatewayService.getFreeSlotsBySpecializationAndDate(specialization, date, pageable);
+        return appointmentService.getFreeSlotsBySpecializationAndDate(specialization, date, pageable);
     }
 }
