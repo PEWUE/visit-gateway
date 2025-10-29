@@ -43,7 +43,7 @@ public class AppointmentController {
 
     @GetMapping("/free-slots/specialization")
     public PageDto<AppointmentDto> getFreeSlotsBySpecializationAndDate(
-            @RequestParam String specialization,
+            @RequestParam(required = false) String specialization,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             Pageable pageable) {
         return appointmentService.getFreeSlotsBySpecializationAndDate(specialization, date, pageable);
