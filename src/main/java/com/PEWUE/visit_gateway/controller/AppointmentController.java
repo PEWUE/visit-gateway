@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,6 +48,26 @@ public class AppointmentController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             Pageable pageable) {
         return appointmentService.getFreeSlotsBySpecializationAndDate(specialization, date, pageable);
+    }
+
+    @GetMapping("/patient/{patientId}/specialization-range")
+    public PageDto<AppointmentDto> getPatientAppointments(
+            @PathVariable Long patientId,
+            @RequestParam(required = false) String specialization,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+            Pageable pageable
+    ) {
+        return appointmentService.getPatientAppointments(patientId, specialization, from, to, pageable);
+    }
+
+    @GetMapping("/free-slots/specialization-range")
+    public PageDto<AppointmentDto> getFreeSlotsBySpecializationAndRange(
+            @RequestParam(required = false) String specialization,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+            Pageable pageable) {
+        return appointmentService.getFreeSlotsBySpecializationAndRange(specialization, from, to, pageable);
     }
 
     @GetMapping("/doctor/{doctorId}")

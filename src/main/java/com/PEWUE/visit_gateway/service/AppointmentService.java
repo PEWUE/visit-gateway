@@ -38,6 +38,16 @@ public class AppointmentService {
         return medicalClinicClient.getAppointments(doctorId, null, pageable);
     }
 
+    public PageDto<AppointmentDto> getPatientAppointments(Long patientId, String specialization, LocalDateTime from, LocalDateTime to, Pageable pageable) {
+        return medicalClinicClient.getPatientAppointmentsBySpecializationAndRange(
+                patientId, specialization, from, to, pageable
+        );
+    }
+
+    public PageDto<AppointmentDto> getFreeSlotsBySpecializationAndRange(String specialization, LocalDateTime from, LocalDateTime to, Pageable pageable) {
+        return medicalClinicClient.getFreeSlotsBySpecializationAndRange(specialization, from, to, pageable);
+    }
+
     public void cancelAppointment(Long appointmentId) {
         AppointmentDto appointmentDto = medicalClinicClient.findById(appointmentId);
         if (appointmentDto.startTime().isBefore(LocalDateTime.now())) {
