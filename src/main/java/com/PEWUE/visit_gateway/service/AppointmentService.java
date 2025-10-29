@@ -35,4 +35,8 @@ public class AppointmentService {
     public PageDto<AppointmentDto> getDoctorsAppointments(Long doctorId, Pageable pageable) {
         return medicalClinicClient.getAppointments(doctorId, null, pageable);
     }
+
+    public void cancelAppointment(Long appointmentId) {
+        medicalClinicClient.cancelAppointment(appointmentId);
+    }
 }

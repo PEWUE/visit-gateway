@@ -6,8 +6,10 @@ import com.PEWUE.visit_gateway.dto.AppointmentDto;
 import com.PEWUE.visit_gateway.dto.DoctorDto;
 import com.PEWUE.visit_gateway.dto.PageDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,9 @@ public interface MedicalClinicClient {
 
     @GetMapping("/appointments/free-slots/specialization")
     PageDto<AppointmentDto> getFreeSlotsBySpecializationAndDate(@RequestParam String specialization, @RequestParam String date, Pageable pageable);
+
+    @DeleteMapping("/appointments/{appointmentId}")
+    void cancelAppointment(@PathVariable Long appointmentId);
 
     @GetMapping("/doctors")
     PageDto<DoctorDto> getDoctors(@RequestParam String specialization, Pageable pageable);
