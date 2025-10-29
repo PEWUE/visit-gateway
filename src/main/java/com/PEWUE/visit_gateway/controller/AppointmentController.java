@@ -45,4 +45,9 @@ public class AppointmentController {
             Pageable pageable) {
         return appointmentService.getFreeSlotsBySpecializationAndDate(specialization, date, pageable);
     }
+
+    @GetMapping("/doctor/{doctorId}")
+    public PageDto<AppointmentDto> getAppointmentsForDoctor(@PathVariable Long doctorId, Pageable pageable) {
+        return appointmentService.getDoctorsAppointments(doctorId, pageable);
+    }
 }

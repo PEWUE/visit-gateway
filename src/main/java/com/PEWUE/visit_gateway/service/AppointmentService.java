@@ -31,4 +31,8 @@ public class AppointmentService {
     public PageDto<AppointmentDto> getFreeSlotsBySpecializationAndDate(String specialization, LocalDate date, Pageable pageable) {
         return medicalClinicClient.getFreeSlotsBySpecializationAndDate(specialization, date.format(DateTimeFormatter.ISO_DATE), pageable);
     }
+
+    public PageDto<AppointmentDto> getDoctorsAppointments(Long doctorId, Pageable pageable) {
+        return medicalClinicClient.getAppointments(doctorId, null, pageable);
+    }
 }
