@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
-
 
 @FeignClient(name = "medical-clinic", url = "http://localhost:8080", configuration = MedicalClinicClientConfiguration.class, fallbackFactory = MedicalClinicFallbackFactory.class)
 public interface MedicalClinicClient {
