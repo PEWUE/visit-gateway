@@ -1,5 +1,7 @@
 package com.PEWUE.visit_gateway.decoder;
 
+import com.PEWUE.visit_gateway.exception.BadRequestException;
+import com.PEWUE.visit_gateway.exception.ConflictException;
 import com.PEWUE.visit_gateway.exception.NotFoundException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,8 +29,12 @@ public class MedicalClinicErrorDecoder implements ErrorDecoder {
             String message = jsonNode.has("message") ? jsonNode.get("message").asText() : "Unknown error";
 
             switch (response.status()) {
+                case 400:
+                    return new BadRequestException(message);
                 case 404:
                     return new NotFoundException(message);
+                case 409:
+                    return new ConflictException(message);
                 case 500:
                     return new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, message);
                 case 503:
