@@ -9,43 +9,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
 public class AppointmentService {
     private final MedicalClinicClient medicalClinicClient;
 
-    public PageDto<AppointmentDto> getPatientAppointments(Long patientId, Pageable pageable) {
-        return medicalClinicClient.getAppointments(null, patientId, pageable);
+    public PageDto<AppointmentDto> findAppointments(
+            Long doctorId,
+            Long patientId,
+            String specialization,
+            LocalDateTime from,
+            LocalDateTime to,
+            Boolean freeSlots,
+            Pageable pageable) {
+        return medicalClinicClient.getAppointments(
+                doctorId, patientId, specialization, from, to, freeSlots, pageable);
     }
 
     public AppointmentDto bookAppointment(BookAppointmentCommand command) {
         return medicalClinicClient.bookAppointment(command);
-    }
-
-    public PageDto<AppointmentDto> getFreeSlots(Long doctorId, Pageable pageable) {
-        return medicalClinicClient.getFreeSlots(doctorId, pageable);
-    }
-
-    public PageDto<AppointmentDto> getFreeSlotsBySpecializationAndDate(String specialization, LocalDate date, Pageable pageable) {
-        return medicalClinicClient.getFreeSlotsBySpecializationAndDate(specialization, date.format(DateTimeFormatter.ISO_DATE), pageable);
-    }
-
-    public PageDto<AppointmentDto> getDoctorsAppointments(Long doctorId, Pageable pageable) {
-        return medicalClinicClient.getAppointments(doctorId, null, pageable);
-    }
-
-    public PageDto<AppointmentDto> getPatientAppointments(Long patientId, String specialization, LocalDateTime from, LocalDateTime to, Pageable pageable) {
-        return medicalClinicClient.getPatientAppointmentsBySpecializationAndRange(
-                patientId, specialization, from, to, pageable
-        );
-    }
-
-    public PageDto<AppointmentDto> getFreeSlotsBySpecializationAndRange(String specialization, LocalDateTime from, LocalDateTime to, Pageable pageable) {
-        return medicalClinicClient.getFreeSlotsBySpecializationAndRange(specialization, from, to, pageable);
     }
 
     public void cancelAppointment(Long appointmentId) {

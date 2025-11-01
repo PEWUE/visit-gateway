@@ -25,6 +25,10 @@ public interface MedicalClinicClient {
     PageDto<AppointmentDto> getAppointments(
             @RequestParam(required = false) Long doctorId,
             @RequestParam(required = false) Long patientId,
+            @RequestParam(required = false) String specialization,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+            @RequestParam(required = false) Boolean freeSlots,
             Pageable pageable
     );
 
@@ -34,31 +38,8 @@ public interface MedicalClinicClient {
     @PatchMapping("/appointments/book")
     AppointmentDto bookAppointment(@RequestBody BookAppointmentCommand command);
 
-    @GetMapping("/appointments/free-slots/doctor")
-    PageDto<AppointmentDto> getFreeSlots(@RequestParam Long doctorId, Pageable pageable);
-
-    @GetMapping("/appointments/free-slots/specialization")
-    PageDto<AppointmentDto> getFreeSlotsBySpecializationAndDate(@RequestParam String specialization, @RequestParam String date, Pageable pageable);
-
     @DeleteMapping("/appointments/{appointmentId}")
     void cancelAppointment(@PathVariable Long appointmentId);
-
-    @GetMapping("/appointments/patient/{patientId}/specialization-range")
-    PageDto<AppointmentDto> getPatientAppointmentsBySpecializationAndRange(
-            @PathVariable Long patientId,
-            @RequestParam(required = false) String specialization,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
-            Pageable pageable
-    );
-
-    @GetMapping("/appointments/free-slots/specialization-range")
-    PageDto<AppointmentDto> getFreeSlotsBySpecializationAndRange(
-            @RequestParam String specialization,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
-            Pageable pageable
-    );
 
     @GetMapping("/doctors")
     PageDto<DoctorDto> getDoctors(@RequestParam String specialization, Pageable pageable);
