@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/doctors")
@@ -41,6 +43,7 @@ public class DoctorController {
     })
     @GetMapping
     public PageDto<DoctorDto> getDoctors(@RequestParam(required = false) String specialization, @ParameterObject Pageable pageable) {
+        log.info("GET /doctors called with specialization='{}', pageable={}", specialization, pageable);
         return doctorService.getDoctors(specialization, pageable);
     }
 }

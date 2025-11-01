@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/appointments")
@@ -63,6 +65,8 @@ public class AppointmentController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
             @RequestParam(required = false) Boolean freeSlots,
             @ParameterObject Pageable pageable) {
+        log.info("GET /appointments called with doctorId={}, patientId={}, specialization={}, from={}, to={}, freeSlots={}, pageable={}",
+                doctorId, patientId, specialization, from, to, freeSlots, pageable);
         return appointmentService.findAppointments(
                 doctorId, patientId, specialization, from, to, freeSlots, pageable);
     }
@@ -87,6 +91,7 @@ public class AppointmentController {
     })
     @PatchMapping("/book")
     public AppointmentDto bookAppointment(@RequestBody BookAppointmentCommand command) {
+        log.info("PATCH /appointments/book called with command: {}", command);
         return appointmentService.bookAppointment(command);
     }
 
@@ -111,6 +116,7 @@ public class AppointmentController {
     @DeleteMapping("/{appointmentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelAppointment(@PathVariable Long appointmentId) {
+        log.info("DELETE /appointments/{} called", appointmentId);
         appointmentService.cancelAppointment(appointmentId);
     }
 }
