@@ -29,6 +29,10 @@ public class AppointmentService {
     }
 
     public AppointmentDto bookAppointment(BookAppointmentCommand command) {
+        AppointmentDto appointmentDto = medicalClinicClient.findById(command.appointmentId());
+        if (appointmentDto.startTime().isBefore(LocalDateTime.now())) {
+            throw new BadRequestException("Cannot book past appointments");
+        }
         return medicalClinicClient.bookAppointment(command);
     }
 
