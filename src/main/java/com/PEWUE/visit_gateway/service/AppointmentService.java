@@ -32,7 +32,7 @@ public class AppointmentService {
                 doctorId, patientId, specialization, from, to, freeSlots, pageable);
     }
 
-    public AppointmentDto bookAppointment(BookAppointmentCommand command) {
+    public AppointmentDto book(BookAppointmentCommand command) {
         log.debug("Booking appointment with data: {}", command);
         AppointmentDto appointmentDto = medicalClinicClient.findById(command.appointmentId());
         if (appointmentDto.startTime().isBefore(LocalDateTime.now())) {
@@ -43,7 +43,7 @@ public class AppointmentService {
         return booked;
     }
 
-    public void cancelAppointment(Long appointmentId) {
+    public void cancel(Long appointmentId) {
         log.debug("Cancelling appointment with id: {}", appointmentId);
         AppointmentDto appointmentDto = medicalClinicClient.findById(appointmentId);
         if (appointmentDto.startTime().isBefore(LocalDateTime.now())) {

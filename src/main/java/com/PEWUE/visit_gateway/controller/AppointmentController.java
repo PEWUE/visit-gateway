@@ -92,7 +92,7 @@ public class AppointmentController {
     @PatchMapping("/book")
     public AppointmentDto bookAppointment(@RequestBody BookAppointmentCommand command) {
         log.info("PATCH /appointments/book called with command: {}", command);
-        return appointmentService.bookAppointment(command);
+        return appointmentService.book(command);
     }
 
     @Operation(summary = "Cancel an appointment")
@@ -117,6 +117,6 @@ public class AppointmentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelAppointment(@PathVariable Long appointmentId) {
         log.info("DELETE /appointments/{} called", appointmentId);
-        appointmentService.cancelAppointment(appointmentId);
+        appointmentService.cancel(appointmentId);
     }
 }
