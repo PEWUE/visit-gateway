@@ -18,7 +18,7 @@ import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 
 
-@FeignClient(name = "medical-clinic", url = "http://localhost:8080", configuration = MedicalClinicClientConfiguration.class, fallbackFactory = MedicalClinicFallbackFactory.class)
+@FeignClient(name = "medical-clinic", url = "${medical-clinic.url}", configuration = MedicalClinicClientConfiguration.class, fallbackFactory = MedicalClinicFallbackFactory.class)
 public interface MedicalClinicClient {
 
     @GetMapping("/appointments")
