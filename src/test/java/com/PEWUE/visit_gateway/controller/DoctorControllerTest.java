@@ -2,9 +2,7 @@ package com.PEWUE.visit_gateway.controller;
 
 import com.PEWUE.visit_gateway.dto.DoctorDto;
 import com.PEWUE.visit_gateway.dto.PageDto;
-import com.PEWUE.visit_gateway.service.AppointmentService;
 import com.PEWUE.visit_gateway.service.DoctorService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,9 +31,6 @@ public class DoctorControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Test
     void shouldReturnPagedDoctorDtosWhenDataCorrect() throws Exception {
