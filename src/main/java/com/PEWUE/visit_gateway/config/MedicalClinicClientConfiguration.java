@@ -5,18 +5,15 @@ import feign.Retryer;
 import feign.codec.ErrorDecoder;
 import feign.okhttp.OkHttpClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.TimeUnit;
 
+@Configuration
 public class MedicalClinicClientConfiguration {
     @Bean
     public feign.Client feignClient() {
         return new OkHttpClient();
-    }
-
-    @Bean
-    public ErrorDecoder errorDecoder() {
-        return new MedicalClinicErrorDecoder();
     }
 
     @Bean

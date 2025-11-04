@@ -39,14 +39,14 @@ public class AppointmentControllerTest {
 
     @Test
     void shouldReturnPagedAppointmentDtosWhenDataCorrect() throws Exception {
-        AppointmentDto a1 = AppointmentDto.builder()
+        AppointmentDto appointment1 = AppointmentDto.builder()
                 .id(1L)
                 .doctorId(1L)
                 .patientId(2L)
                 .startTime(LocalDateTime.of(2025, 10, 1, 10, 45))
                 .endTime(LocalDateTime.of(2025, 10, 1, 11, 15))
                 .build();
-        AppointmentDto a2 = AppointmentDto.builder()
+        AppointmentDto appointment2 = AppointmentDto.builder()
                 .id(2L)
                 .doctorId(1L)
                 .patientId(2L)
@@ -55,19 +55,19 @@ public class AppointmentControllerTest {
                 .build();
         Pageable pageable = PageRequest.of(0, 2);
         PageDto<AppointmentDto> pageDto = new PageDto<>(
-                List.of(a1, a2),
+                List.of(appointment1, appointment2),
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 2L,
                 1
         );
 
-        when(appointmentService.findAppointments(eq(a1.doctorId()), eq(a1.patientId()), isNull(), isNull(), isNull(), isNull(), eq(pageable)))
+        when(appointmentService.findAppointments(eq(appointment1.doctorId()), eq(appointment1.patientId()), isNull(), isNull(), isNull(), isNull(), eq(pageable)))
                 .thenReturn(pageDto);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/appointments")
-                        .param("doctorId", a1.doctorId().toString())
-                        .param("patientId", a1.patientId().toString())
+                        .param("doctorId", appointment1.doctorId().toString())
+                        .param("patientId", appointment1.patientId().toString())
                         .param("page", "0")
                         .param("size", "2")
                         .contentType(MediaType.APPLICATION_JSON))
