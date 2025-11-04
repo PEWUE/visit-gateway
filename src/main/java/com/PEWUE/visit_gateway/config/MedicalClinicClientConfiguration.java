@@ -1,8 +1,6 @@
 package com.PEWUE.visit_gateway.config;
 
-import com.PEWUE.visit_gateway.decoder.MedicalClinicErrorDecoder;
 import feign.Retryer;
-import feign.codec.ErrorDecoder;
 import feign.okhttp.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
